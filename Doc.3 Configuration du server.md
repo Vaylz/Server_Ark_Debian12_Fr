@@ -9,15 +9,20 @@ nano /home/arkserverserver/ShooterGame/Config/DefaultGame.ini
 ```
 Voici un tableau des différentes commande pour le fichier Game.init
 | 🛠️Commande                               |🧩 Description                                             |
-|------------------------------------------|------------------------------------------------------------|
-| OverrideOfficialDifficulty=5.0           |Niveau max des dinos sauvages à 150                         |
-| bDisableStructurePlacementCollision=true |Construction sans collision                                 |
-| bAllowUnlimitedRespecs=true              | Game.ini | Respec illimité des compétences                 |
+|-------------------------------------------|------------------------------------------------------------|
+| OverrideOfficialDifficulty=5.0 | Définit le niveau max des dinos sauvages (5.0 × 30 = niveau 150).|
+| bDisableStructurePlacementCollision=true | Construction sans collision |
+
 ```bash
 nano /home/arkserverserver/ShooterGame/Config/DefaultGameUserSetting.ini
 ```
 Voici un tableau des différentes commande pour le fichier GameUserSetting.init
-| 🛠️commande | 🧩 Description / Effet |
-|--- |--- |--- |
-| OverrideOfficialDifficulty=5.0 | Définit le niveau max des dinos sauvages (5.0 × 30 = niveau 150). |
-| bDisableStructurePlacementCollision=true | Autorise la construction sans collision (plus de liberté dans les bases). |
+| 🛠️Commande                               |🧩 Description                                             |
+|-------------------------------------------|------------------------------------------------------------|
+| ShowFloatingDamageText=True | Affiche les dégâts au-dessus des créatures quand on les attaque. |
+| DifficultyOffset=1.0 | Active la difficulté maximale (à combiner avec `OverrideOfficialDifficulty`) |
+| TamingSpeedMultiplier=10.0 | Taming 10 fois plus rapide. |
+| EnablePvPGamma=True | Permet aux joueurs d’utiliser les commandes gamma (luminosité). |
+| ServerCrosshair=True | Affiche un viseur à l’écran (utile pour les tirs). |
+| ShowMapPlayerLocation=True | Affiche la position du joueur sur la carte. |
+| AutoSavePeriodMinutes=15 | Sauvegarde automatique du serveur toutes les 15 minutes. |
