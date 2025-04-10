@@ -8,11 +8,11 @@ Pour ajouter, modifier ou supprimer des commandes, il éditer les fichier :
 nano /home/arkserverserver/ShooterGame/Config/DefaultGame.ini
 ```
 Voici un tableau des différentes commande pour le fichier Game.init
-| 🛠️commande | 🧩 Description / Effet |
-|--- |--- |--- |
-| OverrideOfficialDifficulty=5.0 | Définit le niveau max des dinos sauvages (5.0 × 30 = niveau 150). |
-| bDisableStructurePlacementCollision=true | Autorise la construction sans collision (plus de liberté dans les bases). |
-
+| 🛠️Commande                               |🧩 Description                                             |
+|------------------------------------------|------------------------------------------------------------|
+| OverrideOfficialDifficulty=5.0           |Niveau max des dinos sauvages à 150                         |
+| bDisableStructurePlacementCollision=true |Construction sans collision                                 |
+| bAllowUnlimitedRespecs=true              | Game.ini | Respec illimité des compétences                 |
 ```bash
 nano /home/arkserverserver/ShooterGame/Config/DefaultGameUserSetting.ini
 ```
