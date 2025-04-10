@@ -1,0 +1,2 @@
+# Configuration du server ARK ! 
+Il faut savoir qu'il y a deux fichiers pour configurer votre server ARK, le `Game.ini` et le `GameUserSetting.ini` - Game.ini : Ce fichier est plus avancé. Il est utilisé pour les modifications de spawn, personnalisation des niveaux de dinos, et les engrammes. - GameUserSetting.ini : Ce fichier contient les paramètres principaux du serveur, comme l’XP, la difficulté, le taming speed, etc.
