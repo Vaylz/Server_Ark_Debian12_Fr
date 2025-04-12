@@ -14,17 +14,12 @@ sudo apt install apache2
 
 ## Étape 2 : Création de l'interface de contrôle
 
-Créez un répertoire pour l'interface de contrôle :
+On va utiliser le fichier index.html de base :
 
 ```bash
-sudo mkdir /var/www/html/ark_server_control
-sudo nano /var/www/html/ark_server_control/index.html
+sudo nano /var/www/html/index.html
 ```
-
-## Étape 3 : Ajout du code HTML
-
-Ajoutez le code suivant dans `index.html` :
-
+Ajout le code HTML
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -78,20 +73,14 @@ Ajoutez le code suivant dans `index.html` :
 </body>
 </html>
 ```
-ouvrire le port 80 avec ufw :
-```bash
-sudo ufw allow 80/tcp
-```
-## Étape 4 : Création des scripts CGI
+## Étape 3 : Création des scripts CGI
 
 Créez les scripts `startserver.sh` et `stopserver.sh` dans `/usr/lib/cgi-bin/` :
-
 ```bash
 sudo nano /usr/lib/cgi-bin/startserver.sh
 ```
 
 Ajoutez le code suivant dans `startserver.sh` :
-
 ```bash
 #!/bin/bash
 
@@ -158,19 +147,14 @@ fi
 
 echo "</body></html>"
 exit 0
-
-
 ```
 
-
 Puis, créez `stopserver.sh` :
-
 ```bash
 sudo nano /usr/lib/cgi-bin/stopserver.sh
 ```
 
 Ajoutez le code suivant dans `stopserver.sh` :
-
 ```bash
 #!/bin/bash
 
@@ -206,34 +190,25 @@ fi
 
 echo "</body></html>"
 exit 0
-
 ```
-rendre les script  executible
 
+rendre les script  executible
 ```bash
 sudo chmod +x /usr/lib/cgi-bin/startserver.sh /usr/lib/cgi-bin/stopserver.sh
 ```
 
-## Étape 5 : Configuration d'Apache pour les scripts CGI
+## Étape 4 : Configuration d'Apache pour les scripts CGI
 
 Activez le module CGI d'Apache :
-
 ```bash
 sudo a2enmod cgi
 ```
 
 Ouvrez le fichier de configuration d'Apache :
-
 ```bash
-cd /etc/apache2/sites-available/000-default.conf
+sudo nano /etc/apache2/sites-available/000-default.conf
 ```
-Faite une copie du fichier de 000-default.conf
-
-```bash
-sudo cp 000-default.conf ark.conf
-```
-Ajoutez la configuration suivante dans le fichier ark.conf :
-
+Ajoutez la configuration suivante dans le fichier `000-default.conf` :
 ```apache
 <Directory "/var/www/cgi-bin">
     AllowOverride None
@@ -242,38 +217,35 @@ Ajoutez la configuration suivante dans le fichier ark.conf :
     Allow from all
 </Directory>
 ```
-et modifier l'emplacement ou ce trouve votre fichier html
 
-Puis redémarrez Apache :
-
-```bash
-sudo systemctl restart apache2
-```
-## Étape 6 : Creation d'un group ARKgroup
+## Étape 5 : Creation d'un group ARKgroup
 
 On va créer un groupe appelé `arkgroup`
-
 ```bash
 sudo groupadd arkgroup
 ```
-Ajouter les utilisateurs arkserver et www-data au groupe
 
+Ajouter les utilisateurs arkserver et www-data au groupe
 ```bash
 sudo usermod -aG arkgroup arkserver
 sudo usermod -aG arkgroup www-data
 ```
-Ensuite, il faut changer le groupe propriétaire du répertoire ARK pour qu'il soit sous la gestion de arkgroup. Cela va permettre à tous les utilisateurs dans ce groupe d'accéder au dossier.
 
+Ensuite, il faut changer le groupe propriétaire du répertoire ARK pour qu'il soit sous la gestion de arkgroup. Cela va permettre à tous les utilisateurs dans ce groupe d'accéder au dossier.
 ```bash
 sudo chown -R arkserver:arkgroup /home/arkserver
 sudo chmod -R 770 /home/arkserver
 ```
 Attention de bien vérifier si le group arkgroup a les droits sur l'utilisateur arkserver
 
-## Étape 7 : Accédez à votre interface
+## Étape 6 : Accédez à votre interface
+
+Puis redémarrez Apache :
+```bash
+sudo systemctl restart apache2
+```
 
 Vous pouvez maintenant accéder à votre site via l'URL suivante :
-
 ```
 http://votre-serveur/ark_server_control/index.html
 ```
