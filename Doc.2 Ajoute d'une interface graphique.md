@@ -100,11 +100,12 @@ Ajout le code HTML
 
 </html>
 ```
-Ajout le code CSS dans un nouveau fichier
+Creer un fichier pour le CSS
 ```bash
 sudo nano /var/www/html/style.css
 ```
-```html
+Ajout le code CSS
+```css
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
