@@ -23,55 +23,236 @@ Ajout le code HTML
 ```html
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue sur notre serveur ARK</title>
+    <title>Serveur ARK: Survival Evolved</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="logo ARK.png">
     <script>
-        // Fonction pour envoyer une requête AJAX sans recharger la page
+        // programme lancer et stop server
         function executeServerAction(scriptPath) {
-            var xhr = new XMLHttpRequest(); // Créer l'objet XMLHttpRequest
-
-            // Vérification de l'état de la requête
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Insérer la réponse dans la section messages
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
                     document.getElementById("messageContent").innerHTML = xhr.responseText;
                 }
             };
-
-            // Configurer et envoyer la requête GET vers le script CGI
             xhr.open("GET", scriptPath, true);
             xhr.send();
         }
+        // programme status server
+        function updateServerStatus() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("serverStatus").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "/cgi-bin/statusserver.sh", true);
+            xhr.send();
+        }
+        // Rafraîchir le statut toutes les 10 secondes
+        setInterval(updateServerStatus, 10000);
+        window.onload = updateServerStatus;
     </script>
 </head>
+
 <body>
     <header>
-        <h1>Serveur ARK: Survival Evolved</h1>
+        <div class="container">
+            <h1><img src="logo ARK.png" alt="Logo ARK" class="ark-logo"> Serveur ARK: Survival Evolved 🌋</h1>
+            <p>Gérez votre serveur facilement</p>
+        </div>
     </header>
 
-    <main>
-        <section id="status">
-            <h2>État du serveur</h2>
-            <!-- Bouton pour démarrer le serveur -->
-            <button type="button" onclick="executeServerAction('/cgi-bin/startserver.sh')">Lancer le serveur</button>
-            <br><br>
-            <!-- Bouton pour arrêter le serveur -->
-            <button type="button" onclick="executeServerAction('/cgi-bin/stopserver.sh')">Arrêter le serveur</button>
+    <main class="container">
+        <section class="server-info">
+            <div class="server-control">
+                <h2>🎮 Contrôle du serveur</h2>
+                <div class="button-group">
+                    <button onclick="executeServerAction('/cgi-bin/startserver.sh')" class="start-btn">Démarrer</button>
+                    <button onclick="executeServerAction('/cgi-bin/stopserver.sh')" class="stop-btn">Arrêter</button>
+                </div>
+                <br>
+                <div class="server-status">
+                    <h2>📡 Statut du serveur</h2>
+                    <div id="serverStatus" class="status-box">
+                        Récupération en cours...
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Section pour afficher les messages du serveur -->
-        <section id="messages">
-            <h2>Messages du serveur</h2>
-            <div id="messageContent">
+        <section class="server-messages">
+            <h2>📢 Messages du serveur</h2>
+            <div id="messageContent" class="message-box">
                 Aucune action pour le moment.
             </div>
         </section>
     </main>
+
+    <footer>
+        <p>&copy; <strong>Vaylz Serveur ARK 2025</strong> - Interface Web personnalisée</p>
+    </footer>
 </body>
+
 </html>
+```
+Ajout le code CSS dans un nouveau fichier
+```bash
+sudo nano /var/www/html/style.css
+```
+```html
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b0c10;
+    color: #c5c6c7;
+}
+
+header {
+    background-color: #1c1e25;
+    color: #66fcf1;
+    padding: 10px 20px;
+    border-bottom: 3px solid #45a29e;
+}
+
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #c5c6c7;
+}
+
+.ark-logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+
+.ark-logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+main {
+    padding: 2rem 1rem;
+}
+
+h1, h2 {
+    margin-bottom: 1rem;
+}
+
+.server-control, .server-messages {
+    background: #1f2833;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.start-btn {
+    background: #45a29e;
+    color: white;
+}
+
+.start-btn:hover {
+    background: #66fcf1;
+    color: #0b0c10;
+}
+
+.stop-btn {
+    background: #c3073f;
+    color: white;
+}
+
+.stop-btn:hover {
+    background: #950740;
+}
+
+.message-box {
+    background: #0b0c10;
+    border: 1px solid #66fcf1;
+    padding: 1rem;
+    border-radius: 5px;
+    min-height: 100px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+footer {
+    text-align: center;
+    padding: 0.2rem;
+    background: #1f2833;
+    color: #45a29e;
+}
+
+
+.server-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.server-control, .server-status {
+    flex: 1 1 45%;
+    background: #1f2833;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+}
+
+.status-box {
+    background-color: #0b0c10;
+    border: 2px solid #45a29e;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #66fcf1;
+    font-weight: bold;
+    text-align: center;
+}
+
 ```
 ## Étape 3 : Création des scripts CGI
 
